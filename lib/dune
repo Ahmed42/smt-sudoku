@@ -1,0 +1,4 @@
+(library
+ (name smt_sudoku)
+ (modules solver)
+ (libraries z3))

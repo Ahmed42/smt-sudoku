@@ -1,0 +1,4 @@
+(executable
+ (public_name smt_sudoku)
+ (name main)
+ (libraries smt_sudoku))
