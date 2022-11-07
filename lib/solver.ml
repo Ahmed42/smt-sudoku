@@ -180,10 +180,12 @@ let solve_puzzle (p : puzzle) =
 let load_and_solve () =
   set_global_param "unsat_core" "true";
   set_global_param "proof" "true";
-  let puzzles = load_puzzles "easy10.sdm" in
+  let puzzles = load_puzzles "SUPER160.sdm" in
   let puzzle1 = List.nth puzzles 0 in
   let c_table , _, model = solve_puzzle puzzle1 in
   (c_table, model)
+
+
     
 
 let print_solution (model : Model.model) (c_table : consts_table) (p : puzzle) =
@@ -196,12 +198,21 @@ let print_solution (model : Model.model) (c_table : consts_table) (p : puzzle) =
       | None -> "_"
       | Some expr -> Expr.to_string expr
       in
-      print_string ("\027[0;32m" ^ cell_value_string ^ "\027[0;06m"))
+      print_string ("\027[0;32m" ^ cell_value_string ^ "\027[0;10m"))
     p
 
+let load_solve_print file_name i =
+  set_global_param "unsat_core" "true";
+  set_global_param "proof" "true";
+  let puzzles = load_puzzles file_name in
+  let puzzle_i = List.nth puzzles i in
+  let c_table , _, model = solve_puzzle puzzle_i in
+  match model with
+  | None -> print_string "Couldn't find a solution!"
+  | Some model' -> print_solution model' c_table puzzle_i
 
-let print_loaded_puzzle () =
-  let puzzles = load_puzzles "easy10.sdm" in
+let print_first_puzzle file_name =
+  let puzzles = load_puzzles file_name in
   let puzzle1 = List.nth puzzles 0 in
   print_puzzle (fun _ _ -> print_int 0) puzzle1
 
